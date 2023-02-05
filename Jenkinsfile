@@ -2,8 +2,8 @@ pipeline {
     agent any
     stages {
         stage('build') {
-            when{
-                expression{
+            when {
+                expression {
                     BRANCH_NAME = 'main'
                     }
                 }
