@@ -1,19 +1,39 @@
 pipeline {
     agent any
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-        stage('build') {
-            when {
-                expression {
-                    BRANCH_NAME = 'main'
-                    }
+         stage('Clone repository'){
+            steps { 
+                script{
+                checkout scm
                 }
-            steps {
-                echo 'builds the app'
             }
         }
-        stage('deploy') {
+
+        stage('Build') {
             steps {
-                echo 'deploys the app'
+                script{
+                 app = docker.build("underwater")
+                }
+            }
+        }
+
+        stage('Test'){
+            steps {
+                echo 'Empty'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script{
+                        docker.withRegistry('808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image', 'ecr:us-east-1:aws-credentials') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                }
             }
         }
     }
