@@ -15,16 +15,25 @@ pipeline {
         stage('Build') {
             steps {
                 script{
-                 app = docker.build("underwater")
+                 dockerImage = docker.build("some-aviv-image")
                 }
             }
         }
 
-        stage('Test'){
-            steps {
-                echo 'Empty'
-            }
-        }
+        //stage('Push image') {
+        //    withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
+        //    dockerImage.push()
+        //}
+        stage('Deploy') { 
+            steps { 
+                script{ 
+                        docker.withRegistry('808447716657.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials' 
+                        dockerImage.push("${env.BUILD_NUMBER}") 
+                        dockerImage.push("latest") 
+                    } 
+                } 
+            } 
+        } 
         
     }
 }
