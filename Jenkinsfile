@@ -12,13 +12,11 @@ pipeline {
             }
         }
 
-        //stage('Build') {
+        //stage('Docker Build') {
+        //    agent any
         //    steps {
-        //        script{
-        //          
-        //         dockerImage = docker.build("some-aviv-image")
-        //        }
-        //    }
+      	//      sh 'docker build -t shanem/spring-petclinic:latest .'
+        //   }
         //}
 
         //stage('Push image') {
