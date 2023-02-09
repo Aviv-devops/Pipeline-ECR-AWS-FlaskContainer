@@ -12,13 +12,14 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script{
-                 dockerImage = docker.build("some-aviv-image")
-                }
-            }
-        }
+        //stage('Build') {
+        //    steps {
+        //        script{
+        //          
+        //         dockerImage = docker.build("some-aviv-image")
+        //        }
+        //    }
+        //}
 
         //stage('Push image') {
         //    withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
