@@ -28,7 +28,9 @@ pipeline {
         stage('login server & docker pull'){
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
-                    sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
+                    //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
+                    sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 54.83.199.231 uname -a'
+                    //sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 54.83.199.231 uname -a'
                     sh 'whoami'
                     sh 'ifconfig'
                     //sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
