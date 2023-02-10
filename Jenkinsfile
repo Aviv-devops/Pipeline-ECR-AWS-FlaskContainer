@@ -29,7 +29,7 @@ pipeline {
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231'
                     //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
                 }
-                sh 'echo success lgoin'
+                sh 'touch aaa'
                 echo "success lgoin"
          }
        }
