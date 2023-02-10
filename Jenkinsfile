@@ -39,8 +39,9 @@ pipeline {
 
         stage('docker run'){
             steps {
-                sh 'sudo -S docker run -itd 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
-                sh 'sudo -S docker ps'
+                sh 'sudo su'
+                sh 'docker run -itd 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
+                sh 'docker ps'
                 
             }
        }
