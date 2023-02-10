@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters{
+        DOCKER_IMAGE = ''
+    }
     stages {
         stage('Clone repository') { 
             steps { 
@@ -18,7 +21,6 @@ pipeline {
                     sh 'docker build -t flask_image .'
                     sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                     sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-                    sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                 }
             }
         }
@@ -31,7 +33,7 @@ pipeline {
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
                     sh 'whoami'
                     sh 'ifconfig'
-                    //sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:latest'
+                    sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
                 }
                 
                 echo "success lgoin"
