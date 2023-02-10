@@ -29,5 +29,14 @@ pipeline {
                 //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
             }
         }
+        /* https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
+        stage('login server'){
+         steps{
+            sshagent(credentials:['Login_Cloud_Server']){
+               sh 'ssh  -o StrictHostKeyChecking=no  root@135.181.203.3 uptime "whoami"'
+          }
+        echo "success lgoin"
+         }
+       }*/
     }
 }
