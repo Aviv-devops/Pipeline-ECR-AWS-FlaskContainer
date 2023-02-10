@@ -24,12 +24,13 @@ pipeline {
         
         
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
-        stage('login server'){
+        stage('login server & git pull'){
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
                     sh 'whoami'
                     sh 'ifconfig'
+                    sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:latest'
                 }
                 
                 echo "success lgoin"
