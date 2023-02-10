@@ -24,19 +24,20 @@ pipeline {
             
         stage('Test connection to kuby2') {
             steps {
-                
+                echo "1"
                 //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                 //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
             }
         }
-        /* https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
+        
+        // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
         stage('login server'){
-         steps{
-            sshagent(credentials:['Login_Cloud_Server']){
-               sh 'ssh  -o StrictHostKeyChecking=no  root@135.181.203.3 uptime "whoami"'
-          }
-        echo "success lgoin"
+            steps{
+                sshagent(credentials:['54.83.199.231']){
+                    sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
+                }
+                echo "success lgoin"
          }
-       }*/
+       }
     }
 }
