@@ -1,38 +1,34 @@
 pipeline {
-    agent any 
+    agent any
     options {
         skipStagesAfterUnstable()
     }
     stages {
-         stage('Clone repository'){
+         stage('Clone repository') { 
             steps { 
                 script{
-                checkout scm
+                    checkout scm
                 }
             }
         }
 
-        stage('Docker Build') {
-    	    agent any
-            steps {
-      	        sh 'sudo docker build -t aviv/flask:latest .'
+        stage('Build') { 
+            steps { 
+                script{
+                    app = docker.build("underwater")
+                }
             }
         }
-
-        //stage('Push image') {
-        //    withDockerRegistry([ credentialsId: "dockerhubaccount", url: "" ]) {
-        //    dockerImage.push()
-        //}
-        stage('Deploy') { 
-            steps { 
-                script{ 
-                        docker.withRegistry('808447716657.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials')
-                        dockerImage.push("${env.BUILD_NUMBER}") 
-                        dockerImage.push("latest") 
-                    } 
-                } 
-          
-        } 
         
+        stage('Deploy') {
+            steps {
+                script{
+                    docker.withRegistry('808447716657.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                }
+            }
+        }
     }
 }
