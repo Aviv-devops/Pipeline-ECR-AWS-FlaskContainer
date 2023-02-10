@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters{
-        DOCKER_IMAGE = ''
+        DOCKER_IMAGE = 's'
     }
     stages {
         stage('Clone repository') { 
