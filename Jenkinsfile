@@ -8,7 +8,7 @@ pipeline {
             }
         }
         
-        stage('build & deploy to ECR') {
+        stage('build & deploy docker image to ECR') {
             steps {
                 
                 //Authenticate aws
@@ -25,7 +25,7 @@ pipeline {
         
         
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
-        stage('login server & git pull'){
+        stage('login server & docker pull'){
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
@@ -33,8 +33,13 @@ pipeline {
                     sh 'ifconfig'
                     sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
                 }
-                
                 echo "success lgoin"
+            }
+            stage('docker run'){
+                steps {
+                    sh 'sudo docker run -itd 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
+                    sh 'sudo docker ps'
+                }
             }
        }
     }
