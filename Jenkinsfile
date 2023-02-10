@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        /*stage('Clone repository') { 
+        stage('Clone repository') { 
             steps { 
                     checkout scm
             }
@@ -20,8 +20,8 @@ pipeline {
                     sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'*/
                 }
             }
-        //}
-        */
+        }
+        
         
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
         stage('login server'){
