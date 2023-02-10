@@ -33,7 +33,7 @@ pipeline {
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
         stage('login server'){
             steps{
-                sshagent(credentials:['54.83.199.231']){
+                sshagent(credentials:['54.83.199.231']){ 
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
                 }
                 echo "success lgoin"
