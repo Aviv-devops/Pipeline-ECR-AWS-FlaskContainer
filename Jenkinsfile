@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-         stage('Clone repository') { 
+        stage('Clone repository') { 
             steps { 
                     checkout scm
             }
@@ -20,6 +20,7 @@ pipeline {
                     sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'*/
                 }
             }
+        }
             
             stage('build & deploy to ECR') {
             steps {
@@ -29,6 +30,7 @@ pipeline {
                     //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                     //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                 }
+                
             }
         }
     }
