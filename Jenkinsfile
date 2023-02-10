@@ -24,7 +24,8 @@ pipeline {
             
         stage('Test connection to kuby2') {
             steps {
-                sh "ssh -i /home/ubuntu/devops.pem ubuntu@54.83.199.231 -y"
+                sh 'sudo cat /home/ubuntu/devops.pem > pem'
+                sh "ssh -i pem ubuntu@54.83.199.231 -y"
                 sh 'echo hhhhh'
                 //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                 //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
