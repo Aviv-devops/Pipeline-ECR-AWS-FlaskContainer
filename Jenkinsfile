@@ -6,12 +6,6 @@ pipeline {
                     checkout scm
             }
         }
-
-        stage('Build') { 
-            steps { 
-                    //app = docker.build("underwater")
-            }
-        }
         
         stage('build & deploy to ECR') {
             steps {
