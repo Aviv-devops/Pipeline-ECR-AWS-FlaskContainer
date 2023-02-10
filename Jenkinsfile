@@ -15,9 +15,19 @@ pipeline {
                     
                     //login to docker with aws user and the password will be taken from the variable above.
                     sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker build -t flask_image .'
+                    /*sh 'docker build -t flask_image .'
                     sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-                    sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+                    sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'*/
+                }
+            }
+            
+            stage('build & deploy to ECR') {
+            steps {
+                withEnv (["devops.pem=${env.devops.pem}"]){
+                    sh 'ssh -i devops.pem ubuntu@54.83.199.231'
+                    sh 'echo hhhhh'
+                    //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+                    //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                 }
             }
         }
