@@ -7,7 +7,7 @@ pipeline {
             }
         }
         
-        stage('build & deploy to ECR') {
+        stage('build & deploy to ECR1') {
             steps {
                 
                 //Authenticate aws
@@ -22,7 +22,7 @@ pipeline {
             }
         }
             
-            stage('build & deploy to ECR') {
+        stage('build & deploy to ECR') {
             steps {
                 withEnv (["devops.pem=${env.devops.pem}"]){
                     sh 'ssh -i devops.pem ubuntu@54.83.199.231'
@@ -35,4 +35,3 @@ pipeline {
         }
     }
 }
-
