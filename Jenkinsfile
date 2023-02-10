@@ -34,7 +34,8 @@ pipeline {
         stage('login server'){
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
-                    sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
+                    sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231'
+                    //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
                 }
                 echo "success lgoin"
          }
