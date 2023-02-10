@@ -27,6 +27,7 @@ pipeline {
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231'
+                    sh 'whoami'
                 }
                 
                 echo "success lgoin"
