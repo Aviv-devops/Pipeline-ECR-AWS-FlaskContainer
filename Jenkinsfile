@@ -18,7 +18,7 @@ pipeline {
                     /*sh 'docker build -t flask_image .'
                     sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                     sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'*/
-                    sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:latest'
+                    sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
                 }
             }
         }
