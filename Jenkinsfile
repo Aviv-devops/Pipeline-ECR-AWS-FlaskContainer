@@ -7,7 +7,7 @@ pipeline {
             }
         }
         
-        stage('build & deploy to ECR1') {
+        stage('build & deploy to ECR') {
             steps {
                 
                 //Authenticate aws
@@ -22,15 +22,12 @@ pipeline {
             }
         }
             
-        stage('build & deploy to ECR') {
+        stage('Test connection to kuby2') {
             steps {
-                withEnv (["devops.pem=${env.devops.pem}"]){
-                    sh 'ssh -i devops.pem ubuntu@54.83.199.231'
-                    sh 'echo hhhhh'
-                    //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-                    //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-                }
-                
+                sh "ssh -i devops.pem ubuntu@54.83.199.231"
+                sh 'echo hhhhh'
+                //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+                //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
             }
         }
     }
