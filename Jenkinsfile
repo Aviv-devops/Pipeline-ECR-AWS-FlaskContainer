@@ -21,14 +21,6 @@ pipeline {
                 }
             }
         }
-            
-        stage('Test connection to kuby2') {
-            steps {
-                echo "1"
-                //sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-                //sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-            }
-        }
         
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
         stage('login server'){
@@ -37,6 +29,7 @@ pipeline {
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231'
                     //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
                 }
+                sh 'echo success lgoin'
                 echo "success lgoin"
          }
        }
