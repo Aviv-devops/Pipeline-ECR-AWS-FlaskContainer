@@ -27,13 +27,10 @@ pipeline {
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231'
-                    //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime "whoami"'
-                    sh 'echo i think i got it'
-                    sh 'touch aaaaa'
                 }
                 
                 echo "success lgoin"
-         }
+            }
        }
     }
 }
