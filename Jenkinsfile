@@ -53,6 +53,7 @@ pipeline {
             }
         }
         
+        /*
         //4
         stage("Create Remote File") {
             steps{
@@ -61,6 +62,7 @@ pipeline {
                 }
             }
         }
+        */
         
         //2
         stage("Import Docker Image") {
