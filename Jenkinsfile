@@ -56,7 +56,7 @@ pipeline {
         stage("touch /home/ubuntu/your-image.tar") {
             steps { 
                 sshagent(credentials:['54.83.199.231']) {
-                    sh 'touch ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
+                    sh 'cat your-image.tar > ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
                     //sh 'scp your-image.tar ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
                 }
             }
