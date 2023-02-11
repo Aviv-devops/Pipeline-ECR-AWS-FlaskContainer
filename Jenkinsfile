@@ -1,16 +1,19 @@
-def myVar = 'initial_value'
-
 pipeline {
     agent any
     
+    enviroment {
+        curImage = '808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+    }
+    
     stages {
+        
         stage('Clone repository') { 
             steps { 
                     checkout scm
             }
         }
         
-        stage('build & deploy docker image to ECR') {
+        stage('build docker image') {
             steps {
                 
                 //Authenticate aws
@@ -19,11 +22,18 @@ pipeline {
                     //login to docker with aws user and the password will be taken from the variable above.
                     sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'
                     sh 'docker build -t flask_image .'
-                    sh 'docker tag flask_image:latest 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-                    sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+                    
                 }
             }
         }
+        
+        stage ('docker tag & docker push){
+               steps{
+                    sh "docker tag flask_image:latest ${curImage}"
+                    sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+               }
+        }
+        
         
         stage('docker pull'){
             steps{
@@ -58,16 +68,5 @@ pipeline {
        }
        */
         
-        
-        
-        
-        /*
-        //https://gist.github.com/kelvinc1024/7782edac3df63e9d4f4236213fc70696
-        withCredentials([sshUserPrivateKey(credentialsId: "yourkeyid", keyFileVariable: 'keyfile')]) {
-        stage('scp-f/b') {
-            sh 'scp -i ${keyfile} do sth here'
-            }
-        }
-        */
     }
 }
