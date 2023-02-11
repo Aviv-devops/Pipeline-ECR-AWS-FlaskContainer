@@ -48,19 +48,27 @@ pipeline {
         
         //1
         stage("Export Docker Image") {
-            sh "docker save ${curImage} > your-image.tar"
-        }
-        //2
-        stage("Import Docker Image") {
-            sshagent(credentials:['54.83.199.231']) {
-                sh 'scp your-image.tar ubuntu@54.83.199.231/home/user/your-image.tar'
-                sh 'ssh -t ubuntu@54.83.199.231 "docker load < /home/user/your-image.tar"'
+            steps { 
+                sh "docker save ${curImage} > your-image.tar"
             }
         }
+        
+        //2
+        stage("Import Docker Image") {
+            steps { 
+                sshagent(credentials:['54.83.199.231']) {
+                    sh 'scp your-image.tar ubuntu@54.83.199.231/home/user/your-image.tar'
+                    sh 'ssh -t ubuntu@54.83.199.231 "docker load < /home/user/your-image.tar"'
+                }
+            }
+        }
+        
         //3
         stage("Create Container") {
-            sshagent(credentials:['54.83.199.231']) {
-                sh "ssh -t ubuntu@54.83.199.231 'docker run -itd --name flask_""$BUILD_ID"" ${curImage}'"
+            steps { 
+                sshagent(credentials:['54.83.199.231']) {
+                    sh "ssh -t ubuntu@54.83.199.231 'docker run -itd --name flask_""$BUILD_ID"" ${curImage}'"
+                }
             }
         }
         
