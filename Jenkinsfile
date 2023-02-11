@@ -1,7 +1,7 @@
 pipeline {
     agent any
     
-    enviroment {
+    environment {
         curImage = '808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
     }
     
