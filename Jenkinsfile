@@ -22,9 +22,22 @@ pipeline {
                 }
             }
         }
+        /*
+        //https://gist.github.com/kelvinc1024/7782edac3df63e9d4f4236213fc70696
+        withCredentials([sshUserPrivateKey(credentialsId: "yourkeyid", keyFileVariable: 'keyfile')]) {
+        stage('scp-f/b') {
+            sh 'scp -i ${keyfile} do sth here'
+            }
+        }
+        */
         
+        
+        
+        
+        
+        //WORKS 
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
-        stage('login server & docker pull'){
+       /* stage('login server & docker pull'){
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
@@ -37,7 +50,7 @@ pipeline {
                 //sh 'pwd'
             }
         }
-        
+        */
 
         /*stage('docker run'){
             steps {
