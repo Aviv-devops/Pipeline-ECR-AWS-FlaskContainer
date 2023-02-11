@@ -1,7 +1,7 @@
+def myVar = 'initial_value'
+
 pipeline {
     agent any
-    
-                 
     
     stages {
         stage('Clone repository') { 
@@ -27,11 +27,12 @@ pipeline {
         
         stage('docker pull'){
             steps{
-                sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""' 
+                sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID"" > ""${myVar}""'
+                echo "${myVar}" // prints 
             }
         }
         
-        
+        /*
         //WORKS 
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
         stage('login server & docker run'){
@@ -46,7 +47,7 @@ pipeline {
                 //sh 'pwd'
             }
         }
-        
+        */
 
         /*stage('docker run'){
             steps {
