@@ -26,7 +26,7 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage ('docker build'){
                steps{
                     sh 'docker build -t flask_image .'
@@ -52,17 +52,7 @@ pipeline {
                 sh "docker save ${curImage} > your-image.tar"
             }
         }
-        */
-        stage("touch /home/ubuntu/your-image.tar") {
-            steps { 
-                sshagent(credentials:['54.83.199.231']) {
-                    sh 'cat your-image.tar > ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
-                    //sh 'scp your-image.tar ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
-                }
-            }
-        }
-         
-        /*
+        
         //2
         stage("Import Docker Image") {
             steps { 
