@@ -27,8 +27,8 @@ pipeline {
         
         stage('docker pull'){
             steps{
-                sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID"" > ""${myVar}""'
-                echo "${myVar}" // prints 
+                sh 'docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+                echo "808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID"" > ${myVar}" // prints 
             }
         }
         
