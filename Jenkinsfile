@@ -1,13 +1,6 @@
 pipeline {
     agent any
     
-    def remote = [:]
-    remote.name = 'test'
-    remote.host = '54.83.199.231'
-    remote.user = 'ubuntu'
-    //remote.password = 'password'
-    remote.allowAnyHosts = true
-    
     stages {
         stage('Clone repository') { 
             steps { 
@@ -30,29 +23,21 @@ pipeline {
             }
         }
         
-        stage('Remote SSH') {
-            withEnv (["DEVOPS=${env.DEVOPS}"]){
-                remote.password = "${env.DEVOPS}"
-                sshCommand remote: remote, command: "ls -l"
-                sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
-            }
-        }
-        
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
-        /*stage('login server & docker pull'){
+        stage('login server & docker pull'){
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
                     //sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uptime "whoami"'
-                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname -a'
-                    //sh 'pwd'
-                    //sh 'ifconfig'
+                    sh '''ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname -a &&
+                    pwd &&
+                    ifconfig'''
                 }
                 echo "success lgoin"
-                sh 'pwd'
+                //sh 'pwd'
             }
         }
-        */
+        
 
         /*stage('docker run'){
             steps {
