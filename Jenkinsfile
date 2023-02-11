@@ -67,7 +67,8 @@ pipeline {
         stage("Create Container") {
             steps { 
                 sshagent(credentials:['54.83.199.231']) {
-                    sh "ssh -t ubuntu@54.83.199.231 'docker run -itd --name flask_""$BUILD_ID"" ${curImage}'"
+                    sh "ssh -t ubuntu@54.83.199.231 'docker run -itd ${curImage}'"
+                    //--name flask_""$BUILD_ID""
                 }
             }
         }
