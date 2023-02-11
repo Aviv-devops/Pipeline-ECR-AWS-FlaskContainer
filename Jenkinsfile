@@ -29,8 +29,8 @@ pipeline {
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
-                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uptime "whoami"'
-                    //sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname -a'
+                    //sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uptime "whoami"'
+                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname -a'
                     //sh 'pwd'
                     //sh 'ifconfig'
                 }
