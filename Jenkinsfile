@@ -51,16 +51,16 @@ pipeline {
                 sh "docker save ${curImage} > your-image.tar"}
         }
         
-        /*
         //4
         stage("Create Remote File") {
         steps{
                 sshagent(['your-ssh-credentials']) {
-                    sh 'ssh -T ubuntu@54.83.199.231 "touch /home/ubuntu/your-image.tar && chmod 777 /home/ubuntu/your-image.tar"'
+                    sh 'ssh -T ubuntu@54.83.199.231 "touch /home/ubuntu/your-image.tar"'
+                    sh 'ssh -T ubuntu@54.83.199.231 "chmod 777 /home/ubuntu/your-image.tar"'
                 }
             }
         }
-        */
+        
         
         //2
         stage("Import Docker Image") {
