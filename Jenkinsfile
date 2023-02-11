@@ -57,7 +57,7 @@ pipeline {
         stage("Create Remote File") {
             steps{
                 sshagent(['your-ssh-credentials']) {
-                    sh 'ssh -t ubuntu@54.83.199.231 "touch /home/ubuntu/your-image.tar && chmod 777 /home/ubuntu/your-image.tar"'
+                    sh 'ssh -T ubuntu@54.83.199.231 "touch /home/ubuntu/your-image.tar && chmod 777 /home/ubuntu/your-image.tar"'
                 }
             }
         }
