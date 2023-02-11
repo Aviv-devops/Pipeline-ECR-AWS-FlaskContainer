@@ -27,7 +27,7 @@ pipeline {
             }
         }
         
-        stage ('docker tag & docker push){
+        stage ('docker tag & docker push'){
                steps{
                     sh "docker tag flask_image:latest ${curImage}"
                     sh 'docker push 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
