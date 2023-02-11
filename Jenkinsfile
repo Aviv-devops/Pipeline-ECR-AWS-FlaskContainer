@@ -57,8 +57,8 @@ pipeline {
         stage("Import Docker Image") {
             steps { 
                 sshagent(credentials:['54.83.199.231']) {
-                    sh 'scp your-image.tar ubuntu@54.83.199.231/home/user/your-image.tar'
-                    sh 'ssh -t ubuntu@54.83.199.231 "docker load < /home/user/your-image.tar"'
+                    sh 'scp your-image.tar ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
+                    sh 'ssh -t ubuntu@54.83.199.231 "docker load < /home/ubuntu/your-image.tar"'
                 }
             }
         }
