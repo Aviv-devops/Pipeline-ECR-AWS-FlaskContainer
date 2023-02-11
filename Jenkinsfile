@@ -29,13 +29,13 @@ pipeline {
             steps{
                 sshagent(credentials:['54.83.199.231']){ 
                     //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uptime'
-                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname -a && ifconfig'
-                    //sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 54.83.199.231 uname -a'
-                    sh 'pwd'
-                    sh 'whoami'
-                    sh 'ifconfig'
+                    sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname "whoami"'
+                    //sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uname -a && ifconfig'
+                    //sh 'pwd'
+                    //sh 'ifconfig'
                 }
                 echo "success lgoin"
+                sh 'pwd'
             }
         }
 
