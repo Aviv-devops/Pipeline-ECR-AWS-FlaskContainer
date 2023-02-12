@@ -54,7 +54,7 @@ pipeline {
         
         stage("Connect and docker pull") {
             steps{
-                sshagent(credentials:['54.83.199.231']) {
+                sshagent(credentials:['devops']) {
                     sh 'ssh -T ubuntu@54.83.199.231 "docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:latest && docker run -itd ${curImage}"'
                 }
             }
