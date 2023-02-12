@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         curImage = '808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
+        AWSconnection = withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"])
     }
     
     stages {
@@ -16,12 +17,13 @@ pipeline {
         
         stage('connect to docker') {
             steps{
+                
             //Authenticate aws
-            withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]){
-              
-                //login to docker with aws user and the password will be taken from the variable above.
-                sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'
-            }}
+            "${AWSconnection}"{
+                    //login to docker with aws user and the password will be taken from the variable above.
+                    sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'
+                }
+            }
         }
         
         stage ('docker build'){
@@ -55,7 +57,7 @@ pipeline {
             steps{
                 sshagent(['your-ssh-credentials']) {
                     
-                    sh 'ssh -T ubuntu@54.83.199.231 "withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}","AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]){'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}"'
+                    sh "ssh -T ubuntu@54.83.199.231 '''${AWSconnection}{'sh docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}'''"
                     sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage}"'
                 }
             }
