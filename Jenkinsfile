@@ -31,7 +31,7 @@ pipeline {
             }
         }
         
-        stage ('docker tag & docker push'){
+        stage ('docker push'){
             steps{
                     sh "docker tag flask_image:latest ${curImage}"
                     sh "docker push ${curImage}"
@@ -52,10 +52,10 @@ pipeline {
         }
         
         
-        stage("COnnect and docker pull") {
+        stage("Connect and docker pull") {
             steps{
                 sshagent(credentials:['54.83.199.231']) {
-                    sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage} && docker run -itd ${curImage}"'
+                    sh 'ssh -T ubuntu@54.83.199.231 "docker pull 808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:latest && docker run -itd ${curImage}"'
                 }
             }
         }
