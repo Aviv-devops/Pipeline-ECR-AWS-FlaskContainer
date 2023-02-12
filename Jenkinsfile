@@ -26,10 +26,10 @@ pipeline {
         
         stage ('docker build'){
             steps{
-                sh "pwd"
+                    sh 'docker build -t flask_image .'
             }
         }
-        /*
+        
         stage ('docker tag & docker push'){
             steps{
                     sh "docker tag flask_image:latest ${curImage}"
