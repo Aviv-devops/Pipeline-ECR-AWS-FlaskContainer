@@ -55,35 +55,23 @@ pipeline {
         
         stage("COnnect and docker pull") {
             steps{
-                sshagent(['your-ssh-credentials']) {
+                sshagent(credentials:['54.83.199.231']) {
                     
-                    sh "ssh -T ubuntu@54.83.199.231 '''""${AWSconnection}""{'sh docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}'''"
-                    sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage}"'
+                    //sh "ssh -T ubuntu@54.83.199.231 '''${AWSconnection}{'sh docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}'''"
+                    sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage} && docker run -itd ${curImage}"'
                 }
             }
         }
         //sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage}"'
         
-        
+        /*
         stage("Create Container") {
             steps{
             sshagent(credentials:['54.83.199.231']) {
                 sh "ssh -t ubuntu@54.83.199.231 'docker run -itd ${curImage}'"
             }}
         }
-        
-        /*
-        //WORKS 
-        // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
-        stage('login server & docker run'){
-            steps{
-                sshagent(credentials:['54.83.199.231']){ 
-                    //sh 'ssh  -o StrictHostKeyChecking=no  ubuntu@54.83.199.231 uname -a'
-                    //sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 uptime "whoami"'
-                    //sh 'ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 ifconfig'
-                    sh "ssh -o StrictHostKeyChecking=no -l ubuntu 54.83.199.231 docker run -itd ${curImage}"
-            }}
-        }
         */
+        
     }
 }
