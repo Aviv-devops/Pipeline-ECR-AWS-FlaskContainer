@@ -13,13 +13,6 @@ pipeline {
             }
         }
         
-        stage("connect - whoami") {
-            steps{
-            sshagent(credentials:['54.83.199.231']) {
-                sh "ssh -T ubuntu@54.83.199.231 whoami"
-                }
-            }
-        }
         
         stage('connect to docker') {
             steps{
@@ -33,10 +26,11 @@ pipeline {
         
         stage ('docker build'){
             steps{
-                sh 'docker build -t flask_image .'
+                echo "pwd"
+                //sh 'docker build -t flask_image .'
             }
         }
-        
+        /*
         stage ('docker tag & docker push'){
             steps{
                     sh "docker tag flask_image:latest ${curImage}"
@@ -73,7 +67,7 @@ pipeline {
                 sh "ssh -t ubuntu@54.83.199.231 'docker run -itd ${curImage}'"
             }}
         }
-        
+        */
         /*
         //WORKS 
         // https://blog.devgenius.io/how-i-can-make-ssh-from-server-to-jenkins-8dcc34647c6b
