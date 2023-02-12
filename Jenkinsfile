@@ -9,13 +9,15 @@ pipeline {
         
         stage('Clone repository') { 
             steps{
-                checkout scm}
+                checkout scm
+            }
         }
         
         stage("connect - whoami") {
             steps{
             sshagent(credentials:['54.83.199.231']) {
-                sh "ssh -T ubuntu@54.83.199.231 whoami"}
+                sh "ssh -T ubuntu@54.83.199.231 whoami"
+                }
             }
         }
         
@@ -31,52 +33,44 @@ pipeline {
         
         stage ('docker build'){
             steps{
-                sh 'docker build -t flask_image .'}
+                sh 'docker build -t flask_image .'
+            }
         }
         
         stage ('docker tag & docker push'){
             steps{
                     sh "docker tag flask_image:latest ${curImage}"
-                sh "docker push ${curImage}"}
+                    sh "docker push ${curImage}"
+            }
         }
         
+        stage ('docker rm image from local'){
+            steps{
+                    sh "docker image rm ${curImage}"
+            }
+        }
+        
+        //from inside the instance
         stage('docker pull'){
             steps{
-                sh "docker pull ${curImage}"}
+                sh "docker pull ${curImage}"
+            }
         }
         
-        //1
-        stage("Export Docker Image") {
-            steps{
-                sh "docker save ${curImage} > your-image.tar"}
-        }
         
-        //4
-        stage("Create Remote File") {
+        stage("COnnect and docker pull") {
         steps{
                 sshagent(['your-ssh-credentials']) {
-                    sh 'ssh -T ubuntu@54.83.199.231 "touch /home/ubuntu/your-image.tar"'
-                    sh 'ssh -T ubuntu@54.83.199.231 "chmod 777 /home/ubuntu/your-image.tar"'
+                    sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage}"'
                 }
             }
         }
         
         
-        //2
-        stage("Import Docker Image") {
-            steps{
-            sshagent(credentials:['54.83.199.231']) {
-                sh 'scp your-image.tar ubuntu@54.83.199.231/home/ubuntu/your-image.tar'
-                sh 'ssh -t ubuntu@54.83.199.231 "docker load < /home/ubuntu/your-image.tar"'
-            }}
-        }
-        
-        //3
         stage("Create Container") {
             steps{
             sshagent(credentials:['54.83.199.231']) {
                 sh "ssh -t ubuntu@54.83.199.231 'docker run -itd ${curImage}'"
-                //--name flask_""$BUILD_ID""
             }}
         }
         
