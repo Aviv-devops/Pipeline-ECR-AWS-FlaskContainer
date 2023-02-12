@@ -3,7 +3,6 @@ pipeline {
     
     environment {
         curImage = '808447716657.dkr.ecr.us-east-1.amazonaws.com/flask_image:""$BUILD_ID""'
-        AWSconnection = 'withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"])'
     }
     
     stages {
@@ -19,7 +18,7 @@ pipeline {
             steps{
                 
             //Authenticate aws
-            "${AWSconnection}"{
+            withEnv (["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]){
                     //login to docker with aws user and the password will be taken from the variable above.
                     sh 'docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'
                 }
@@ -56,8 +55,6 @@ pipeline {
         stage("COnnect and docker pull") {
             steps{
                 sshagent(credentials:['54.83.199.231']) {
-                    
-                    //sh "ssh -T ubuntu@54.83.199.231 '''${AWSconnection}{'sh docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}'''"
                     sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage} && docker run -itd ${curImage}"'
                 }
             }
