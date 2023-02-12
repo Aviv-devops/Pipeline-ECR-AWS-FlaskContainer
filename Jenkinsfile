@@ -27,7 +27,6 @@ pipeline {
         stage ('docker build'){
             steps{
                 sh "pwd"
-                echo "./.git" > .dockerignore
             }
         }
         /*
