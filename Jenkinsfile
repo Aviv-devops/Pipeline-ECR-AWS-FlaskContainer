@@ -57,7 +57,7 @@ pipeline {
             steps{
                 sshagent(['your-ssh-credentials']) {
                     
-                    sh "ssh -T ubuntu@54.83.199.231 '''${AWSconnection}{'sh docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}'''"
+                    sh "ssh -T ubuntu@54.83.199.231 '''""${AWSconnection}""{'sh docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 808447716657.dkr.ecr.us-east-1.amazonaws.com'}'''"
                     sh 'ssh -T ubuntu@54.83.199.231 "docker pull ${curImage}"'
                 }
             }
