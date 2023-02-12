@@ -27,7 +27,7 @@ pipeline {
         stage ('docker build'){
             steps{
                 sh "pwd"
-                //sh 'docker build -t flask_image .'
+                echo "./.git" > .dockerignore
             }
         }
         /*
