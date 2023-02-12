@@ -26,7 +26,7 @@ pipeline {
         
         stage ('docker build'){
             steps{
-                echo "pwd"
+                sh "pwd"
                 //sh 'docker build -t flask_image .'
             }
         }
