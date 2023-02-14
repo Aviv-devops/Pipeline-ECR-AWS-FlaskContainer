@@ -1,5 +1,8 @@
 # Pipeline-ECR-AWS-FlaskContainer
+// the project is still in building process
+
 Pipeline: 
+
 A. Trigger from commits.
 B. Creates docker image from dockerfile that in the repository.
 C. Pushes docker image to AWS ECR (elastic container repository).
